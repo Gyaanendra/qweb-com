@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clicky Clack</title>
+    <style>
+      /* General Styling */
+      body {
+        background-color: black;
+        color: #aaaaaa;
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        padding: 1rem;
+        box-sizing: border-box;
+      }
+
+      .bn-cn {
+        display: flex; /* Enable flexbox layout */
+        flex-wrap: wrap; /* Allow items to wrap onto multiple lines */
+        justify-content: space-around; /* Distribute space evenly between items */
+        gap: 5px;
+        width: 50%; /* Set the width of the container to 80% of the viewport */
+        max-width: 1000px; /* Optional: Set a maximum width */
+        margin: 0 auto; /* Center the container horizontally */
+      }
+
+      .bn {
+        width: 45px;
+        height: 45px;
+        justify-content: center;
+        margin-left: 5px;
+        cursor: pointer;
+      }
+
+      /* Initially hide all button divs except the first one */
+      .bn-cn,
+      .comb {
+        display: flex;
+      }
+
+      .comb {
+        flex-direction: column;
+      }
+
+      /* Styling for the main button */
+      .hh {
+        background: none;
+        border: none;
+        color: #d5dbe2;
+        font-size: 2rem;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: color 0.3s, transform 0.2s;
+      }
+
+      .hh:hover {
+        color: #00ccff;
+        transform: scale(1.1);
+      }
+
+      .hh:focus {
+        outline: none;
+      }
+      /* Container for input fields arranged in 2x5 grid */
+      .input-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.6rem;
+        width: 300px;
+        justify-content: space-between;
+      }
+
+      .input-field {
+        position: relative;
+        justify-content: center;
+      }
+
+      .input-field input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #aaa;
+        border-radius: 5px;
+        outline: none;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .input-field input[type="number"]:focus {
+        border-color: #383f46;
+      }
+
+      .input-field label {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        color: #aaa;
+        font-size: 1rem;
+        pointer-events: none;
+        transform: translateY(-50%);
+        transition: all 0.3s ease;
+      }
+
+      .input-field input[type="number"]:focus + label,
+      .input-field input[type="number"]:not(:placeholder-shown) + label {
+        top: -10px;
+        left: 8px;
+        color: #d5dbe2;
+        font-size: 0.8rem;
+        padding: 0 4px;
+      }
+      .check-btn {
+        background-color: black;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .check-btn:hover {
+        background-color: white;
+        color: black;
+        border: 1px solid black;
+      }
+      .pass {
+        display: none;
+      }
+      .pass p {
+        color: #90ee90; /* Soft green color */
+        font-family: Arial, sans-serif; /* Optional: Change the font family */
+        font-size: 16px; /* Optional: Change the font size */
+        margin: 0; /* Optional: Remove default margin */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <button class="hh" id="startButton">Click on things</button>
+      <div class="div1 bn-cn">
+        <button class="bn" data-btn="1">1</button
+        ><button class="bn" data-btn="2">2</button
+        ><button class="bn" data-btn="3">3</button>
+        <button class="bn" data-btn="4">4</button
+        ><button class="bn" data-btn="5">5</button>
+      </div>
+      <div class="div2 bn-cn">
+        <button class="bn" data-btn="1">1</button
+        ><button class="bn" data-btn="2">2</button
+        ><button class="bn" data-btn="3">3</button
+        ><button class="bn" data-btn="4">4</button
+        ><button class="bn" data-btn="5">5</button
+        ><button class="bn" data-btn="6">6</button
+        ><button class="bn" data-btn="7">7</button
+        ><button class="bn" data-btn="8">8</button
+        ><button class="bn" data-btn="9">9</button
+        ><button class="bn" data-btn="10">10</button>
+      </div>
+      <div class="div3 bn-cn">
+        <button class="bn" data-btn="1">1</button
+        ><button class="bn" data-btn="2">2</button
+        ><button class="bn" data-btn="3">3</button
+        ><button class="bn" data-btn="4">4</button
+        ><button class="bn" data-btn="5">5</button
+        ><button class="bn" data-btn="6">6</button
+        ><button class="bn" data-btn="7">7</button
+        ><button class="bn" data-btn="8">8</button
+        ><button class="bn" data-btn="9">9</button
+        ><button class="bn" data-btn="10">10</button
+        ><button class="bn" data-btn="11">11</button
+        ><button class="bn" data-btn="12">12</button
+        ><button class="bn" data-btn="13">13</button
+        ><button class="bn" data-btn="14">14</button
+        ><button class="bn" data-btn="15">15</button>
+      </div>
+      <div class="div4 bn-cn">
+        <button class="bn" data-btn="1">1</button
+        ><button class="bn" data-btn="2">2</button
+        ><button class="bn" data-btn="3">3</button
+        ><button class="bn" data-btn="4">4</button
+        ><button class="bn" data-btn="5">5</button
+        ><button class="bn" data-btn="6">6</button
+        ><button class="bn" data-btn="7">7</button
+        ><button class="bn" data-btn="8">8</button
+        ><button class="bn" data-btn="9">9</button
+        ><button class="bn" data-btn="10">10</button
+        ><button class="bn" data-btn="11">11</button
+        ><button class="bn" data-btn="12">12</button
+        ><button class="bn" data-btn="13">13</button
+        ><button class="bn" data-btn="14">14</button
+        ><button class="bn" data-btn="15">15</button
+        ><button class="bn" data-btn="16">16</button
+        ><button class="bn" data-btn="17">17</button
+        ><button class="bn" data-btn="18">18</button
+        ><button class="bn" data-btn="19">19</button
+        ><button class="bn" data-btn="20">20</button>
+      </div>
+      <div class="div5 bn-cn">
+        <button class="bn" data-btn="1">1</button
+        ><button class="bn" data-btn="2">2</button
+        ><button class="bn" data-btn="3">3</button
+        ><button class="bn" data-btn="4">4</button
+        ><button class="bn" data-btn="5">5</button
+        ><button class="bn" data-btn="6">6</button
+        ><button class="bn" data-btn="7">7</button
+        ><button class="bn" data-btn="8">8</button
+        ><button class="bn" data-btn="9">9</button
+        ><button class="bn" data-btn="10">10</button
+        ><button class="bn" data-btn="11">11</button
+        ><button class="bn" data-btn="12">12</button
+        ><button class="bn" data-btn="13">13</button
+        ><button class="bn" data-btn="14">14</button
+        ><button class="bn" data-btn="15">15</button
+        ><button class="bn" data-btn="16">16</button
+        ><button class="bn" data-btn="17">17</button
+        ><button class="bn" data-btn="18">18</button
+        ><button class="bn" data-btn="19">19</button
+        ><button class="bn" data-btn="20">20</button
+        ><button class="bn" data-btn="21">21</button
+        ><button class="bn" data-btn="22">22</button
+        ><button class="bn" data-btn="23">23</button
+        ><button class="bn" data-btn="24">24</button
+        ><button class="bn" data-btn="25">25</button>
+      </div>
+      <div class="div6 bn-cn">
+        <button class="bn" data-btn="1">1</button
+        ><button class="bn" data-btn="2">2</button
+        ><button class="bn" data-btn="3">3</button
+        ><button class="bn" data-btn="4">4</button
+        ><button class="bn" data-btn="5">5</button
+        ><button class="bn" data-btn="6">6</button
+        ><button class="bn" data-btn="7">7</button
+        ><button class="bn" data-btn="8">8</button
+        ><button class="bn" data-btn="9">9</button
+        ><button class="bn" data-btn="10">10</button
+        ><button class="bn" data-btn="11">11</button
+        ><button class="bn" data-btn="12">12</button
+        ><button class="bn" data-btn="13">13</button
+        ><button class="bn" data-btn="14">14</button
+        ><button class="bn" data-btn="15">15</button
+        ><button class="bn" data-btn="16">16</button
+        ><button class="bn" data-btn="17">17</button
+        ><button class="bn" data-btn="18">18</button
+        ><button class="bn" data-btn="19">19</button
+        ><button class="bn" data-btn="20">20</button
+        ><button class="bn" data-btn="21">21</button
+        ><button class="bn" data-btn="22">22</button
+        ><button class="bn" data-btn="23">23</button
+        ><button class="bn" data-btn="24">24</button
+        ><button class="bn" data-btn="25">25</button
+        ><button class="bn" data-btn="26">26</button
+        ><button class="bn" data-btn="27">27</button
+        ><button class="bn" data-btn="28">28</button
+        ><button class="bn" data-btn="29">29</button
+        ><button class="bn" data-btn="30">30</button>
+      </div>
+      <div class="div7 bn-cn">
+        <button class="bn" data-btn="1">1</button
+        ><button class="bn" data-btn="2">2</button
+        ><button class="bn" data-btn="3">3</button
+        ><button class="bn" data-btn="4">4</button
+        ><button class="bn" data-btn="5">5</button
+        ><button class="bn" data-btn="6">6</button
+        ><button class="bn" data-btn="7">7</button
+        ><button class="bn" data-btn="8">8</button
+        ><button class="bn" data-btn="9">9</button
+        ><button class="bn" data-btn="10">10</button
+        ><button class="bn" data-btn="11">11</button
+        ><button class="bn" data-btn="12">12</button
+        ><button class="bn" data-btn="13">13</button
+        ><button class="bn" data-btn="14">14</button
+        ><button class="bn" data-btn="15">15</button
+        ><button class="bn" data-btn="16">16</button
+        ><button class="bn" data-btn="17">17</button
+        ><button class="bn" data-btn="18">18</button
+        ><button class="bn" data-btn="19">19</button
+        ><button class="bn" data-btn="20">20</button
+        ><button class="bn" data-btn="21">21</button
+        ><button class="bn" data-btn="22">22</button
+        ><button class="bn" data-btn="23">23</button
+        ><button class="bn" data-btn="24">24</button
+        ><button class="bn" data-btn="25">25</button
+        ><button class="bn" data-btn="26">26</button
+        ><button class="bn" data-btn="27">27</button
+        ><button class="bn" data-btn="28">28</button
+        ><button class="bn" data-btn="29">29</button
+        ><button class="bn" data-btn="30">30</button
+        ><button class="bn" data-btn="31">31</button
+        ><button class="bn" data-btn="32">32</button
+        ><button class="bn" data-btn="33">33</button
+        ><button class="bn" data-btn="34">34</button
+        ><button class="bn" data-btn="35">35</button>
+      </div>
+      <div class="div8 bn-cn">
+        <button class="bn" data-btn="1">1</button
+        ><button class="bn" data-btn="2">2</button
+        ><button class="bn" data-btn="3">3</button
+        ><button class="bn" data-btn="4">4</button
+        ><button class="bn" data-btn="5">5</button
+        ><button class="bn" data-btn="6">6</button
+        ><button class="bn" data-btn="7">7</button
+        ><button class="bn" data-btn="8">8</button
+        ><button class="bn" data-btn="9">9</button
+        ><button class="bn" data-btn="10">10</button
+        ><button class="bn" data-btn="11">11</button
+        ><button class="bn" data-btn="12">12</button
+        ><button class="bn" data-btn="13">13</button
+        ><button class="bn" data-btn="14">14</button
+        ><button class="bn" data-btn="15">15</button
+        ><button class="bn" data-btn="16">16</button
+        ><button class="bn" data-btn="17">17</button
+        ><button class="bn" data-btn="18">18</button
+        ><button class="bn" data-btn="19">19</button
+        ><button class="bn" data-btn="20">20</button
+        ><button class="bn" data-btn="21">21</button
+        ><button class="bn" data-btn="22">22</button
+        ><button class="bn" data-btn="23">23</button
+        ><button class="bn" data-btn="24">24</button
+        ><button class="bn" data-btn="25">25</button
+        ><button class="bn" data-btn="26">26</button
+        ><button class="bn" data-btn="27">27</button
+        ><button class="bn" data-btn="28">28</button
+        ><button class="bn" data-btn="29">29</button
+        ><button class="bn" data-btn="30">30</button
+        ><button class="bn" data-btn="31">31</button
+        ><button class="bn" data-btn="32">32</button
+        ><button class="bn" data-btn="33">33</button
+        ><button class="bn" data-btn="34">34</button
+        ><button class="bn" data-btn="35">35</button
+        ><button class="bn" data-btn="36">36</button
+        ><button class="bn" data-btn="37">37</button
+        ><button class="bn" data-btn="38">38</button
+        ><button class="bn" data-btn="39">39</button
+        ><button class="bn" data-btn="40">40</button>
+      </div>
+      <div class="div9 bn-cn">
+        <button class="bn" data-btn="1">1</button
+        ><button class="bn" data-btn="2">2</button
+        ><button class="bn" data-btn="3">3</button
+        ><button class="bn" data-btn="4">4</button
+        ><button class="bn" data-btn="5">5</button
+        ><button class="bn" data-btn="6">6</button
+        ><button class="bn" data-btn="7">7</button
+        ><button class="bn" data-btn="8">8</button
+        ><button class="bn" data-btn="9">9</button
+        ><button class="bn" data-btn="10">10</button
+        ><button class="bn" data-btn="11">11</button
+        ><button class="bn" data-btn="12">12</button
+        ><button class="bn" data-btn="13">13</button
+        ><button class="bn" data-btn="14">14</button
+        ><button class="bn" data-btn="15">15</button
+        ><button class="bn" data-btn="16">16</button
+        ><button class="bn" data-btn="17">17</button
+        ><button class="bn" data-btn="18">18</button
+        ><button class="bn" data-btn="19">19</button
+        ><button class="bn" data-btn="20">20</button
+        ><button class="bn" data-btn="21">21</button
+        ><button class="bn" data-btn="22">22</button
+        ><button class="bn" data-btn="23">23</button
+        ><button class="bn" data-btn="24">24</button
+        ><button class="bn" data-btn="25">25</button
+        ><button class="bn" data-btn="26">26</button
+        ><button class="bn" data-btn="27">27</button
+        ><button class="bn" data-btn="28">28</button
+        ><button class="bn" data-btn="29">29</button
+        ><button class="bn" data-btn="30">30</button
+        ><button class="bn" data-btn="31">31</button
+        ><button class="bn" data-btn="32">32</button
+        ><button class="bn" data-btn="33">33</button
+        ><button class="bn" data-btn="34">34</button
+        ><button class="bn" data-btn="35">35</button
+        ><button class="bn" data-btn="36">36</button
+        ><button class="bn" data-btn="37">37</button
+        ><button class="bn" data-btn="38">38</button
+        ><button class="bn" data-btn="39">39</button
+        ><button class="bn" data-btn="40">40</button
+        ><button class="bn" data-btn="41">41</button
+        ><button class="bn" data-btn="42">42</button
+        ><button class="bn" data-btn="43">43</button
+        ><button class="bn" data-btn="44">44</button
+        ><button class="bn" data-btn="45">45</button>
+      </div>
+      <div class="div10 bn-cn">
+        <button class="bn" data-btn="1">1</button
+        ><button class="bn" data-btn="2">2</button
+        ><button class="bn" data-btn="3">3</button
+        ><button class="bn" data-btn="4">4</button
+        ><button class="bn" data-btn="5">5</button
+        ><button class="bn" data-btn="6">6</button
+        ><button class="bn" data-btn="7">7</button
+        ><button class="bn" data-btn="8">8</button
+        ><button class="bn" data-btn="9">9</button
+        ><button class="bn" data-btn="10">10</button
+        ><button class="bn" data-btn="11">11</button
+        ><button class="bn" data-btn="12">12</button
+        ><button class="bn" data-btn="13">13</button
+        ><button class="bn" data-btn="14">14</button
+        ><button class="bn" data-btn="15">15</button
+        ><button class="bn" data-btn="16">16</button
+        ><button class="bn" data-btn="17">17</button
+        ><button class="bn" data-btn="18">18</button
+        ><button class="bn" data-btn="19">19</button
+        ><button class="bn" data-btn="20">20</button
+        ><button class="bn" data-btn="21">21</button
+        ><button class="bn" data-btn="22">22</button
+        ><button class="bn" data-btn="23">23</button
+        ><button class="bn" data-btn="24">24</button
+        ><button class="bn" data-btn="25">25</button
+        ><button class="bn" data-btn="26">26</button
+        ><button class="bn" data-btn="27">27</button
+        ><button class="bn" data-btn="28">28</button
+        ><button class="bn" data-btn="29">29</button
+        ><button class="bn" data-btn="30">30</button
+        ><button class="bn" data-btn="31">31</button
+        ><button class="bn" data-btn="32">32</button
+        ><button class="bn" data-btn="33">33</button
+        ><button class="bn" data-btn="34">34</button
+        ><button class="bn" data-btn="35">35</button
+        ><button class="bn" data-btn="36">36</button
+        ><button class="bn" data-btn="37">37</button
+        ><button class="bn" data-btn="38">38</button
+        ><button class="bn" data-btn="39">39</button
+        ><button class="bn" data-btn="40">40</button
+        ><button class="bn" data-btn="41">41</button
+        ><button class="bn" data-btn="42">42</button
+        ><button class="bn" data-btn="43">43</button
+        ><button class="bn" data-btn="44">44</button
+        ><button class="bn" data-btn="45">45</button
+        ><button class="bn" data-btn="46">46</button
+        ><button class="bn" data-btn="47">47</button
+        ><button class="bn" data-btn="48">48</button
+        ><button class="bn" data-btn="49">49</button
+        ><button class="bn" data-btn="50">50</button>
+      </div>
+      <div class="div11 bn-cn">
+        <button class="bn" data-btn="1">1</button
+        ><button class="bn" data-btn="2">2</button
+        ><button class="bn" data-btn="3">3</button
+        ><button class="bn" data-btn="4">4</button
+        ><button class="bn" data-btn="5">5</button
+        ><button class="bn" data-btn="6">6</button
+        ><button class="bn" data-btn="7">7</button
+        ><button class="bn" data-btn="8">8</button
+        ><button class="bn" data-btn="9">9</button
+        ><button class="bn" data-btn="10">10</button
+        ><button class="bn" data-btn="11">11</button
+        ><button class="bn" data-btn="12">12</button
+        ><button class="bn" data-btn="13">13</button
+        ><button class="bn" data-btn="14">14</button
+        ><button class="bn" data-btn="15">15</button
+        ><button class="bn" data-btn="16">16</button
+        ><button class="bn" data-btn="17">17</button
+        ><button class="bn" data-btn="18">18</button
+        ><button class="bn" data-btn="19">19</button
+        ><button class="bn" data-btn="20">20</button
+        ><button class="bn" data-btn="21">21</button
+        ><button class="bn" data-btn="22">22</button
+        ><button class="bn" data-btn="23">23</button
+        ><button class="bn" data-btn="24">24</button
+        ><button class="bn" data-btn="25">25</button
+        ><button class="bn" data-btn="26">26</button
+        ><button class="bn" data-btn="27">27</button
+        ><button class="bn" data-btn="28">28</button
+        ><button class="bn" data-btn="29">29</button
+        ><button class="bn" data-btn="30">30</button
+        ><button class="bn" data-btn="31">31</button
+        ><button class="bn" data-btn="32">32</button
+        ><button class="bn" data-btn="33">33</button
+        ><button class="bn" data-btn="34">34</button
+        ><button class="bn" data-btn="35">35</button
+        ><button class="bn" data-btn="36">36</button
+        ><button class="bn" data-btn="37">37</button
+        ><button class="bn" data-btn="38">38</button
+        ><button class="bn" data-btn="39">39</button
+        ><button class="bn" data-btn="40">40</button
+        ><button class="bn" data-btn="41">41</button
+        ><button class="bn" data-btn="42">42</button
+        ><button class="bn" data-btn="43">43</button
+        ><button class="bn" data-btn="44">44</button
+        ><button class="bn" data-btn="45">45</button
+        ><button class="bn" data-btn="46">46</button
+        ><button class="bn" data-btn="47">47</button
+        ><button class="bn" data-btn="48">48</button
+        ><button class="bn" data-btn="49">49</button
+        ><button class="bn" data-btn="50">50</button
+        ><button class="bn" data-btn="51">51</button
+        ><button class="bn" data-btn="52">52</button
+        ><button class="bn" data-btn="53">53</button
+        ><button class="bn" data-btn="54">54</button
+        ><button class="bn" data-btn="55">55</button>
+      </div>
+      <div class="div12 bn-cn">
+        <button class="bn" data-btn="1">1</button
+        ><button class="bn" data-btn="2">2</button
+        ><button class="bn" data-btn="3">3</button
+        ><button class="bn" data-btn="4">4</button
+        ><button class="bn" data-btn="5">5</button
+        ><button class="bn" data-btn="6">6</button
+        ><button class="bn" data-btn="7">7</button
+        ><button class="bn" data-btn="8">8</button
+        ><button class="bn" data-btn="9">9</button
+        ><button class="bn" data-btn="10">10</button
+        ><button class="bn" data-btn="11">11</button
+        ><button class="bn" data-btn="12">12</button
+        ><button class="bn" data-btn="13">13</button
+        ><button class="bn" data-btn="14">14</button
+        ><button class="bn" data-btn="15">15</button
+        ><button class="bn" data-btn="16">16</button
+        ><button class="bn" data-btn="17">17</button
+        ><button class="bn" data-btn="18">18</button
+        ><button class="bn" data-btn="19">19</button
+        ><button class="bn" data-btn="20">20</button
+        ><button class="bn" data-btn="21">21</button
+        ><button class="bn" data-btn="22">22</button
+        ><button class="bn" data-btn="23">23</button
+        ><button class="bn" data-btn="24">24</button
+        ><button class="bn" data-btn="25">25</button
+        ><button class="bn" data-btn="26">26</button
+        ><button class="bn" data-btn="27">27</button
+        ><button class="bn" data-btn="28">28</button
+        ><button class="bn" data-btn="29">29</button
+        ><button class="bn" data-btn="30">30</button
+        ><button class="bn" data-btn="31">31</button
+        ><button class="bn" data-btn="32">32</button
+        ><button class="bn" data-btn="33">33</button
+        ><button class="bn" data-btn="34">34</button
+        ><button class="bn" data-btn="35">35</button
+        ><button class="bn" data-btn="36">36</button
+        ><button class="bn" data-btn="37">37</button
+        ><button class="bn" data-btn="38">38</button
+        ><button class="bn" data-btn="39">39</button
+        ><button class="bn" data-btn="40">40</button
+        ><button class="bn" data-btn="41">41</button
+        ><button class="bn" data-btn="42">42</button
+        ><button class="bn" data-btn="43">43</button
+        ><button class="bn" data-btn="44">44</button
+        ><button class="bn" data-btn="45">45</button
+        ><button class="bn" data-btn="46">46</button
+        ><button class="bn" data-btn="47">47</button
+        ><button class="bn" data-btn="48">48</button
+        ><button class="bn" data-btn="49">49</button
+        ><button class="bn" data-btn="50">50</button
+        ><button class="bn" data-btn="51">51</button
+        ><button class="bn" data-btn="52">52</button
+        ><button class="bn" data-btn="53">53</button
+        ><button class="bn" data-btn="54">54</button
+        ><button class="bn" data-btn="55">55</button
+        ><button class="bn" data-btn="56">56</button
+        ><button class="bn" data-btn="57">57</button
+        ><button class="bn" data-btn="58">58</button
+        ><button class="bn" data-btn="59">59</button
+        ><button class="bn" data-btn="60">60</button>
+      </div>
+      <div class="div13 bn-cn">
+        <button class="bn" data-btn="1">1</button
+        ><button class="bn" data-btn="2">2</button
+        ><button class="bn" data-btn="3">3</button
+        ><button class="bn" data-btn="4">4</button
+        ><button class="bn" data-btn="5">5</button
+        ><button class="bn" data-btn="6">6</button
+        ><button class="bn" data-btn="7">7</button
+        ><button class="bn" data-btn="8">8</button
+        ><button class="bn" data-btn="9">9</button
+        ><button class="bn" data-btn="10">10</button
+        ><button class="bn" data-btn="11">11</button
+        ><button class="bn" data-btn="12">12</button
+        ><button class="bn" data-btn="13">13</button
+        ><button class="bn" data-btn="14">14</button
+        ><button class="bn" data-btn="15">15</button
+        ><button class="bn" data-btn="16">16</button
+        ><button class="bn" data-btn="17">17</button
+        ><button class="bn" data-btn="18">18</button
+        ><button class="bn" data-btn="19">19</button
+        ><button class="bn" data-btn="20">20</button
+        ><button class="bn" data-btn="21">21</button
+        ><button class="bn" data-btn="22">22</button
+        ><button class="bn" data-btn="23">23</button
+        ><button class="bn" data-btn="24">24</button
+        ><button class="bn" data-btn="25">25</button
+        ><button class="bn" data-btn="26">26</button
+        ><button class="bn" data-btn="27">27</button
+        ><button class="bn" data-btn="28">28</button
+        ><button class="bn" data-btn="29">29</button
+        ><button class="bn" data-btn="30">30</button
+        ><button class="bn" data-btn="31">31</button
+        ><button class="bn" data-btn="32">32</button
+        ><button class="bn" data-btn="33">33</button
+        ><button class="bn" data-btn="34">34</button
+        ><button class="bn" data-btn="35">35</button
+        ><button class="bn" data-btn="36">36</button
+        ><button class="bn" data-btn="37">37</button
+        ><button class="bn" data-btn="38">38</button
+        ><button class="bn" data-btn="39">39</button
+        ><button class="bn" data-btn="40">40</button
+        ><button class="bn" data-btn="41">41</button
+        ><button class="bn" data-btn="42">42</button
+        ><button class="bn" data-btn="43">43</button
+        ><button class="bn" data-btn="44">44</button
+        ><button class="bn" data-btn="45">45</button
+        ><button class="bn" data-btn="46">46</button
+        ><button class="bn" data-btn="47">47</button
+        ><button class="bn" data-btn="48">48</button
+        ><button class="bn" data-btn="49">49</button
+        ><button class="bn" data-btn="50">50</button
+        ><button class="bn" data-btn="51">51</button
+        ><button class="bn" data-btn="52">52</button
+        ><button class="bn" data-btn="53">53</button
+        ><button class="bn" data-btn="54">54</button
+        ><button class="bn" data-btn="55">55</button
+        ><button class="bn" data-btn="56">56</button
+        ><button class="bn" data-btn="57">57</button
+        ><button class="bn" data-btn="58">58</button
+        ><button class="bn" data-btn="59">59</button
+        ><button class="bn" data-btn="60">60</button
+        ><button class="bn" data-btn="61">61</button
+        ><button class="bn" data-btn="62">62</button
+        ><button class="bn" data-btn="63">63</button
+        ><button class="bn" data-btn="64">64</button
+        ><button class="bn" data-btn="65">65</button>
+      </div>
+      <div class="div14 bn-cn">
+        <button class="bn" data-btn="1">1</button
+        ><button class="bn" data-btn="2">2</button
+        ><button class="bn" data-btn="3">3</button
+        ><button class="bn" data-btn="4">4</button
+        ><button class="bn" data-btn="5">5</button
+        ><button class="bn" data-btn="6">6</button
+        ><button class="bn" data-btn="7">7</button
+        ><button class="bn" data-btn="8">8</button
+        ><button class="bn" data-btn="9">9</button
+        ><button class="bn" data-btn="10">10</button
+        ><button class="bn" data-btn="11">11</button
+        ><button class="bn" data-btn="12">12</button
+        ><button class="bn" data-btn="13">13</button
+        ><button class="bn" data-btn="14">14</button
+        ><button class="bn" data-btn="15">15</button
+        ><button class="bn" data-btn="16">16</button
+        ><button class="bn" data-btn="17">17</button
+        ><button class="bn" data-btn="18">18</button
+        ><button class="bn" data-btn="19">19</button
+        ><button class="bn" data-btn="20">20</button
+        ><button class="bn" data-btn="21">21</button
+        ><button class="bn" data-btn="22">22</button
+        ><button class="bn" data-btn="23">23</button
+        ><button class="bn" data-btn="24">24</button
+        ><button class="bn" data-btn="25">25</button
+        ><button class="bn" data-btn="26">26</button
+        ><button class="bn" data-btn="27">27</button
+        ><button class="bn" data-btn="28">28</button
+        ><button class="bn" data-btn="29">29</button
+        ><button class="bn" data-btn="30">30</button
+        ><button class="bn" data-btn="31">31</button
+        ><button class="bn" data-btn="32">32</button
+        ><button class="bn" data-btn="33">33</button
+        ><button class="bn" data-btn="34">34</button
+        ><button class="bn" data-btn="35">35</button
+        ><button class="bn" data-btn="36">36</button
+        ><button class="bn" data-btn="37">37</button
+        ><button class="bn" data-btn="38">38</button
+        ><button class="bn" data-btn="39">39</button
+        ><button class="bn" data-btn="40">40</button
+        ><button class="bn" data-btn="41">41</button
+        ><button class="bn" data-btn="42">42</button
+        ><button class="bn" data-btn="43">43</button
+        ><button class="bn" data-btn="44">44</button
+        ><button class="bn" data-btn="45">45</button
+        ><button class="bn" data-btn="46">46</button
+        ><button class="bn" data-btn="47">47</button
+        ><button class="bn" data-btn="48">48</button
+        ><button class="bn" data-btn="49">49</button
+        ><button class="bn" data-btn="50">50</button
+        ><button class="bn" data-btn="51">51</button
+        ><button class="bn" data-btn="52">52</button
+        ><button class="bn" data-btn="53">53</button
+        ><button class="bn" data-btn="54">54</button
+        ><button class="bn" data-btn="55">55</button
+        ><button class="bn" data-btn="56">56</button
+        ><button class="bn" data-btn="57">57</button
+        ><button class="bn" data-btn="58">58</button
+        ><button class="bn" data-btn="59">59</button
+        ><button class="bn" data-btn="60">60</button
+        ><button class="bn" data-btn="61">61</button
+        ><button class="bn" data-btn="62">62</button
+        ><button class="bn" data-btn="63">63</button
+        ><button class="bn" data-btn="64">64</button
+        ><button class="bn" data-btn="65">65</button
+        ><button class="bn" data-btn="66">66</button
+        ><button class="bn" data-btn="67">67</button
+        ><button class="bn" data-btn="68">68</button
+        ><button class="bn" data-btn="69">69</button
+        ><button class="bn" data-btn="70">70</button
+        ><button class="bn" data-btn="71">71</button
+        ><button class="bn" data-btn="72">72</button
+        ><button class="bn" data-btn="73">73</button
+        ><button class="bn" data-btn="74">74</button
+        ><button class="bn" data-btn="75">75</button
+        ><button class="bn" data-btn="76">76</button
+        ><button class="bn" data-btn="77">77</button
+        ><button class="bn" data-btn="78">78</button
+        ><button class="bn" data-btn="79">79</button
+        ><button class="bn" data-btn="80">80</button
+        ><button class="bn" data-btn="81">81</button
+        ><button class="bn" data-btn="82">82</button
+        ><button class="bn" data-btn="83">83</button
+        ><button class="bn" data-btn="84">84</button
+        ><button class="bn" data-btn="85">85</button
+        ><button class="bn" data-btn="86">86</button
+        ><button class="bn" data-btn="87">87</button
+        ><button class="bn" data-btn="88">88</button
+        ><button class="bn" data-btn="89">89</button
+        ><button class="bn" data-btn="90">90</button
+        ><button class="bn" data-btn="91">91</button
+        ><button class="bn" data-btn="92">92</button
+        ><button class="bn" data-btn="93">93</button
+        ><button class="bn" data-btn="94">94</button
+        ><button class="bn" data-btn="95">95</button
+        ><button class="bn" data-btn="96">96</button
+        ><button class="bn" data-btn="97">97</button
+        ><button class="bn" data-btn="98">98</button
+        ><button class="bn" data-btn="99">99</button
+        ><button class="bn" data-btn="100">100</button
+        ><button class="bn" data-btn="101">101</button
+        ><button class="bn" data-btn="102">102</button
+        ><button class="bn" data-btn="103">103</button
+        ><button class="bn" data-btn="104">104</button
+        ><button class="bn" data-btn="105">105</button>
+      </div>
+      <div class="comb">
+        <p>Enter the correct Sequence of buttons</p>
+        <div class="input-container">
+          <!-- Using Emmet, you could type "input[type=number]+label{Number $}" and expand it -->
+          <!-- Manually adjusted for simplicity -->
+          <div class="input-field">
+            <input type="number" placeholder=" " /><label>Number 1</label>
+          </div>
+          <div class="input-field">
+            <input type="number" placeholder=" " /><label>Number 2</label>
+          </div>
+          <div class="input-field">
+            <input type="number" placeholder=" " /><label>Number 3</label>
+          </div>
+          <div class="input-field">
+            <input type="number" placeholder=" " /><label>Number 4</label>
+          </div>
+          <div class="input-field">
+            <input type="number" placeholder=" " /><label>Number 5</label>
+          </div>
+          <div class="input-field">
+            <input type="number" placeholder=" " /><label>Number 6</label>
+          </div>
+          <div class="input-field">
+            <input type="number" placeholder=" " /><label>Number 7</label>
+          </div>
+          <div class="input-field">
+            <input type="number" placeholder=" " /><label>Number 8</label>
+          </div>
+          <div class="input-field">
+            <input type="number" placeholder=" " /><label>Number 9</label>
+          </div>
+          <div class="input-field">
+            <input type="number" placeholder=" " /><label>Number 10</label>
+          </div>
+          <div class="input-field">
+            <input type="number" placeholder=" " /><label>Number 11</label>
+          </div>
+          <div class="input-field">
+            <input type="number" placeholder=" " /><label>Number 12</label>
+          </div>
+          <div class="input-field">
+            <input type="number" placeholder=" " /><label>Number 13</label>
+          </div>
+          <div class="input-field">
+            <input type="number" placeholder=" " /><label>Number 14</label>
+          </div>
+          <button class="check-btn">Check</button>
+        </div>
+        <div class="pass">
+          <p>"sldkfkdflskdfklk"</p>
+        </div>
+      </div>
+    </div>
+    <script>
+      const _0x1cc85a = _0x9929;
+      (function (_0x54f18e, _0x9d4f8b) {
+        const _0x5ed299 = _0x9929,
+          _0x2f74d0 = _0x54f18e();
+        while (!![]) {
+          try {
+            const _0x2e585c =
+              parseInt(_0x5ed299(0xea)) / 0x1 +
+              (parseInt(_0x5ed299(0xed)) / 0x2) *
+                (parseInt(_0x5ed299(0xec)) / 0x3) +
+              -parseInt(_0x5ed299(0xfd)) / 0x4 +
+              (parseInt(_0x5ed299(0xeb)) / 0x5) *
+                (-parseInt(_0x5ed299(0x100)) / 0x6) +
+              parseInt(_0x5ed299(0xfc)) / 0x7 +
+              parseInt(_0x5ed299(0xe0)) / 0x8 +
+              (-parseInt(_0x5ed299(0xe3)) / 0x9) *
+                (parseInt(_0x5ed299(0x101)) / 0xa);
+            if (_0x2e585c === _0x9d4f8b) break;
+            else _0x2f74d0["push"](_0x2f74d0["shift"]());
+          } catch (_0x195729) {
+            _0x2f74d0["push"](_0x2f74d0["shift"]());
+          }
+        }
+      })(_0x7a0f, 0x68097);
+      const akesfhalkfhjoliaejfroleqwbnf = [
+        0x3, 0x7, 0x1, 0xf, 0x14, 0x2, 0x1b, 0x1e, 0x4, 0x16, 0xb, 0x16, 0x32,
+        0x69,
+      ];
+      function _0x9929(_0x118893, _0x5296d6) {
+        const _0x7a0f13 = _0x7a0f();
+        return (
+          (_0x9929 = function (_0x9929c3, _0xd8303d) {
+            _0x9929c3 = _0x9929c3 - 0xde;
+            let _0x1522da = _0x7a0f13[_0x9929c3];
+            return _0x1522da;
+          }),
+          _0x9929(_0x118893, _0x5296d6)
+        );
+      }
+      let currentLevel = 0x0;
+      const startButton = document[_0x1cc85a(0xde)](_0x1cc85a(0xfe)),
+        buttonContainers = document[_0x1cc85a(0xe6)](_0x1cc85a(0xf6)),
+        checkCom = document["querySelector"](_0x1cc85a(0xf4));
+      function _0x7a0f() {
+        const _0x492819 = [
+          ".pass",
+          "112711eYpzYu",
+          "295965DhGNeJ",
+          "12SkLwXe",
+          "347782LDwhPj",
+          "preventDefault",
+          "getAttribute",
+          "querySelector",
+          "style",
+          ".hh",
+          "click",
+          ".check-btn",
+          "matches",
+          ".bn-cn",
+          "value",
+          "display",
+          "push",
+          "data-btn",
+          ".bn",
+          "1908018dvWnIc",
+          "830592jqDiGy",
+          "startButton",
+          "forEach",
+          "36jvxxcc",
+          "20rhjFWT",
+          "flex",
+          "length",
+          "target",
+          "getElementById",
+          "none",
+          "3109744obDebf",
+          "mousedown",
+          "input[type=\x22number\x22]",
+          "2162817ZPOCNH",
+          "block",
+          ".comb",
+          "querySelectorAll",
+          "addEventListener",
+          "Wrong\x20button!\x20The\x20game\x20will\x20restart.",
+        ];
+        _0x7a0f = function () {
+          return _0x492819;
+        };
+        return _0x7a0f();
+      }
+      function initializeGame() {
+        const _0x14b857 = _0x1cc85a;
+        (currentLevel = 0x0),
+          buttonContainers["forEach"](
+            (_0x3b2079) =>
+              (_0x3b2079[_0x14b857(0xf1)]["display"] = _0x14b857(0xdf))
+          ),
+          (document[_0x14b857(0xf0)](".comb")[_0x14b857(0xf1)][
+            _0x14b857(0xf8)
+          ] = _0x14b857(0xdf)),
+          (startButton[_0x14b857(0xf1)]["display"] = "block");
+      }
+      function showLevel(_0xd984a6) {
+        const _0x58b057 = _0x1cc85a;
+        buttonContainers[_0x58b057(0xff)](
+          (_0x38296a) =>
+            (_0x38296a[_0x58b057(0xf1)][_0x58b057(0xf8)] = _0x58b057(0xdf))
+        ),
+          _0xd984a6 < buttonContainers[_0x58b057(0x103)] &&
+            (buttonContainers[_0xd984a6][_0x58b057(0xf1)]["display"] =
+              _0x58b057(0x102));
+      }
+      function checkCombination() {
+        const _0x9f8b5b = _0x1cc85a,
+          _0x2a5844 = document[_0x9f8b5b(0xe6)](_0x9f8b5b(0xe2)),
+          _0x1654a8 = [];
+        let _0x54f14e = ![];
+        _0x2a5844["forEach"]((_0x308559) => {
+          const _0x539ef1 = _0x9f8b5b,
+            _0x40f4c5 = _0x308559[_0x539ef1(0xf7)];
+          _0x40f4c5 && _0x1654a8[_0x539ef1(0xf9)](Number(_0x40f4c5));
+        }),
+          _0x1654a8["length"] ===
+            akesfhalkfhjoliaejfroleqwbnf[_0x9f8b5b(0x103)] &&
+            _0x1654a8["every"](
+              (_0x597131, _0x18c450) =>
+                _0x597131 === akesfhalkfhjoliaejfroleqwbnf[_0x18c450]
+            ) &&
+            (document[_0x9f8b5b(0xf0)](_0x9f8b5b(0xe9))[_0x9f8b5b(0xf1)][
+              _0x9f8b5b(0xf8)
+            ] = _0x9f8b5b(0xe4));
+      }
+      startButton[_0x1cc85a(0xe7)](_0x1cc85a(0xf3), () => {
+        (startButton["style"]["display"] = "none"), showLevel(currentLevel);
+      }),
+        buttonContainers[_0x1cc85a(0xff)]((_0x476491) => {
+          _0x476491["addEventListener"]("click", (_0x5662f0) => {
+            const _0x55d8ac = _0x9929;
+            if (!_0x5662f0[_0x55d8ac(0x104)]["matches"](_0x55d8ac(0xfb)))
+              return;
+            const _0x237fe7 = parseInt(
+              _0x5662f0["target"][_0x55d8ac(0xef)](_0x55d8ac(0xfa))
+            );
+            _0x237fe7 === akesfhalkfhjoliaejfroleqwbnf[currentLevel]
+              ? (currentLevel++,
+                currentLevel >= akesfhalkfhjoliaejfroleqwbnf[_0x55d8ac(0x103)]
+                  ? ((buttonContainers[currentLevel - 0x1]["style"][
+                      _0x55d8ac(0xf8)
+                    ] = _0x55d8ac(0xdf)),
+                    (document["querySelector"](_0x55d8ac(0xe5))[
+                      _0x55d8ac(0xf1)
+                    ][_0x55d8ac(0xf8)] = _0x55d8ac(0x102)))
+                  : showLevel(currentLevel))
+              : (alert(_0x55d8ac(0xe8)), initializeGame());
+          });
+        }),
+        initializeGame(),
+        checkCom[_0x1cc85a(0xe7)](_0x1cc85a(0xf3), checkCombination),
+        document[_0x1cc85a(0xe7)](_0x1cc85a(0xe1), (_0x3673b5) => {
+          const _0xe3ccaf = _0x1cc85a;
+          (_0x3673b5["target"][_0xe3ccaf(0xf5)](_0xe3ccaf(0xfb)) ||
+            _0x3673b5[_0xe3ccaf(0x104)][_0xe3ccaf(0xf5)](_0xe3ccaf(0xf2))) &&
+            _0x3673b5[_0xe3ccaf(0xee)]();
+        });
+    </script>
+  </body>
+</html>
